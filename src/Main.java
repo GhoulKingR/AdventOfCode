@@ -30,6 +30,7 @@ public class Main {
 
     private static Map<Integer, Day> initDays() {
         Map<Integer, Day> map = new HashMap<>();
+        map.put(1, Day1.getInstance());
         map.put(2, Day2.getInstance());
         map.put(3, Day3.getInstance());
         return map;
