@@ -20,8 +20,13 @@ public class Day3 implements Day {
 
     @Override
     public void runPart(int part) {
+        if (part > 2 || part < 1) {
+            System.out.println("Part number has to be either 1 or 2");
+            return;
+        }
+
         if (part == 1) Part1.run();
-        else if (part == 2) Part2.run();
+        else Part2.run();
     }
 
     private static class Part1 {
