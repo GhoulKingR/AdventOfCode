@@ -4,53 +4,46 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Day3 implements Day {
-    private static final String dir = "data/day3";
-    private static Optional<Day3> instance = Optional.empty();
+public class Day3 extends Day {
+    private static final String filePath = "data/day3/input.txt";
 
-    public static Day3 getInstance() {
-        if (instance.isEmpty()) {
-            Day3 newDay = new Day3();
-            instance = Optional.of(newDay);
-            return newDay;
-        } else {
-            return instance.get();
+    @Override
+    protected void part1() {
+        try {
+            List<String> lines = getFile(filePath);
+            StringBuilder sb = new StringBuilder();
+            for (String line : lines) {
+                sb.append(line);
+            }
+            List<Mul> muls = Mul.findAll(sb.toString());
+            int total = 0;
+            for (Mul mul : muls) {
+                total += mul.calculate();
+            }
+            System.out.println("Total: " + total);
+            System.out.println("Muls: " + muls);
+        } catch (FileNotFoundException e) {
+            System.err.println("File not found: " + filePath);
         }
     }
 
     @Override
-    public void runPart(int part) {
-        if (part > 2 || part < 1) {
-            System.out.println("Part number has to be either 1 or 2");
-            return;
-        }
-
-        if (part == 1) Part1.run();
-        else Part2.run();
-    }
-
-    private static class Part1 {
-        private static final String file = dir + "/input.txt";
-
-        public static void run() {
-            try {
-                File fileObj = new File(file);
-                Scanner sc = new Scanner(fileObj);
-                StringBuilder sb = new StringBuilder();
-                while (sc.hasNextLine()) {
-                    sb.append(sc.nextLine());
-                }
-                List<Mul> muls = Mul.findAll(sb.toString());
-                int total = 0;
-                for (Mul mul : muls) {
-                    total += mul.calculate();
-                }
-                System.out.println("Total: " + total);
-                System.out.println("Muls: " + muls);
-            } catch (FileNotFoundException e) {
-                System.err.println("File not found: " + file);
-                return;
+    protected void part2() {
+        try {
+            List<String> lines = getFile(filePath);
+            StringBuilder sb = new StringBuilder();
+            for (String line : lines) {
+                sb.append(line);
             }
+            List<Mul> muls = Mul.findAllAdvanced(sb.toString());
+            int total = 0;
+            for (Mul mul : muls) {
+                total += mul.calculate();
+            }
+            System.out.println("Total: " + total);
+            System.out.println("Muls: " + muls);
+        } catch (FileNotFoundException e) {
+            System.err.println("File not found: " + filePath);
         }
     }
 
@@ -114,31 +107,6 @@ public class Day3 implements Day {
                 if (!ignore) muls.add(new Mul(commandStr));
             }
             return muls;
-        }
-    }
-
-    private static class Part2 {
-        private static final String file = dir + "/input.txt";
-
-        public static void run() {
-            try {
-                File fileObj = new File(file);
-                Scanner sc = new Scanner(fileObj);
-                StringBuilder sb = new StringBuilder();
-                while (sc.hasNextLine()) {
-                    sb.append(sc.nextLine());
-                }
-                List<Mul> muls = Mul.findAllAdvanced(sb.toString());
-                int total = 0;
-                for (Mul mul : muls) {
-                    total += mul.calculate();
-                }
-                System.out.println("Total: " + total);
-                System.out.println("Muls: " + muls);
-            } catch (FileNotFoundException e) {
-                System.err.println("File not found: " + file);
-                return;
-            }
         }
     }
 }

@@ -1,59 +1,26 @@
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.List;
 
-public class Day2 implements Day {
-    private static final String dir = "data/day2";
-    private static Optional<Day2> instance = Optional.empty();
-
-    public static Day2 getInstance() {
-        if (instance.isEmpty()) {
-            Day2 newDay = new Day2();
-            instance = Optional.of(newDay);
-            return newDay;
-        } else {
-            return instance.get();
-        }
-    }
+public class Day2 extends Day {
+    private static final String filePath = "data/day2/input.txt";
 
     @Override
-    public void runPart(int part) {
-        if (part > 2 || part < 1) {
-            System.out.println("Part number has to be either 1 or 2");
-            return;
-        }
+    protected void part1() {
+        try {
+            List<String> lines = getFile(filePath);
 
-        if (part == 1) Part1.run();
-        else Part2.run();
-    }
-
-    private static class Part2 {
-        private static void run() {
-            System.out.println("Part 2 not available");
-        }
-    }
-
-    private static class Part1 {
-        private static void run() {
-            try {
-                File file = new File(dir + "/input.txt");
-                Scanner sc = new Scanner(file);
-
-                int count = 0;
-                while (sc.hasNextLine()) {
-                    String lineStr = sc.nextLine();
-                    Line line = new Line(lineStr);
-                    if (line.isSafe()) {
-                        count++;
-                    }
+            int count = 0;
+            for (String lineStr : lines) {
+                Line line = new Line(lineStr);
+                if (line.isSafe()) {
+                    count++;
                 }
-
-                System.out.println(count);
-            } catch (FileNotFoundException e) {
-                System.err.println("File not found: " + e.getMessage());
             }
+
+            System.out.println(count);
+        } catch (FileNotFoundException e) {
+            System.err.println("File not found: " + e.getMessage());
         }
     }
 

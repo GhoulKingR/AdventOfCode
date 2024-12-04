@@ -1,10 +1,8 @@
-import java.util.HashMap;
-import java.util.Map;
-
 public class Main {
     public static void main(String[] args) throws Exception {
         int day = -1, part = -1;
-        Map<Integer, Day> map = initDays();
+        Day[] days = getDays();
+
         for (int i = 0; i < args.length; i++) {
             switch (args[i]) {
                 case "--day":
@@ -22,17 +20,16 @@ public class Main {
         if (day == - 1 || part == -1)
             throw new Exception("You need to initialize both day and part");
 
-        if (!map.containsKey(day))
+        if (day <= 0 || day > days.length)
             throw new Exception("Day " + day + " not available");
 
-        map.get(day).runPart(part);
+        days[day-1].runPart(part);
     }
 
-    private static Map<Integer, Day> initDays() {
-        Map<Integer, Day> map = new HashMap<>();
-        map.put(1, Day1.getInstance());
-        map.put(2, Day2.getInstance());
-        map.put(3, Day3.getInstance());
-        return map;
+    private static Day[] getDays() {
+        return new Day[]{
+            new Day1(), new Day2(),
+            new Day3(), new Day4(),
+        };
     }
 }

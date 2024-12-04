@@ -1,59 +1,53 @@
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-public class Day1 implements Day {
-    private static final String dir = "data/day1";
-    private static Optional<Day1> instance = Optional.empty();
+public class Day1 extends Day {
+    private static final String filePath = "data/day1/input.txt";
 
-    public static Day1 getInstance() {
-        if (instance.isEmpty()) {
-            Day1 newDay = new Day1();
-            instance = Optional.of(newDay);
-            return newDay;
-        } else {
-            return instance.get();
+    @Override
+    protected void part1() {
+        try {
+            List<String> lines = getFile(filePath);
+
+            Line first = new Line();
+            Line second = new Line();
+
+            for (String line : lines) {
+                int[] nums = Arrays.stream(line.split(" {3}"))
+                        .mapToInt(Integer::parseInt).toArray();
+
+                first.addNum(nums[0]);
+                second.addNum(nums[1]);
+            }
+
+            first.sort();
+            second.sort();
+
+            System.out.println("Total distance: " + first.totalDistance(second));
+        } catch (FileNotFoundException e) {
+            System.err.println("File not found: " + e.getMessage());
         }
     }
 
     @Override
-    public void runPart(int part) {
-        if (part > 2 || part < 1) {
-            System.out.println("Part number has to be either 1 or 2");
-            return;
-        }
+    protected void part2() {
+        try {
+            List<String> lines = getFile(filePath);
 
-        if (part == 1) Part1.run();
-        else Part2.run();
-    }
+            Line first = new Line();
+            Line second = new Line();
 
-    private static class Part1 {
-        private static final String filePath = dir + "/input.txt";
+            for (String line : lines) {
+                int[] nums = Arrays.stream(line.split(" {3}"))
+                        .mapToInt(Integer::parseInt).toArray();
 
-        private static void run() {
-            try {
-                File file = new File(filePath);
-                Scanner scanner = new Scanner(file);
-
-                Line first = new Line();
-                Line second = new Line();
-
-                while (scanner.hasNextLine()) {
-                    int[] nums = Arrays.stream(
-                            scanner.nextLine().split(" {3}")
-                    ).mapToInt(Integer::parseInt).toArray();
-
-                    first.addNum(nums[0]);
-                    second.addNum(nums[1]);
-                }
-
-                first.sort();
-                second.sort();
-
-                System.out.println("Total distance: " + first.totalDistance(second));
-            } catch (FileNotFoundException e) {
-                System.out.println("File not found: " + filePath);
+                first.addNum(nums[0]);
+                second.addNum(nums[1]);
             }
+
+            System.out.println("Similarity : " + first.similarityScore(second));
+        } catch (FileNotFoundException e) {
+            System.err.println("File not found: " + e.getMessage());
         }
     }
 
@@ -91,33 +85,6 @@ public class Day1 implements Day {
                 map.put(num, map.getOrDefault(num, 0) + 1);
             }
             return map;
-        }
-    }
-
-    private static class Part2 {
-        private static final String filePath = dir + "/input.txt";
-
-        private static void run() {
-            try {
-                File file = new File(filePath);
-                Scanner scanner = new Scanner(file);
-
-                Line first = new Line();
-                Line second = new Line();
-
-                while (scanner.hasNextLine()) {
-                    int[] nums = Arrays.stream(
-                            scanner.nextLine().split(" {3}")
-                    ).mapToInt(Integer::parseInt).toArray();
-
-                    first.addNum(nums[0]);
-                    second.addNum(nums[1]);
-                }
-
-                System.out.println("Similarity : " + first.similarityScore(second));
-            } catch (FileNotFoundException e) {
-                System.out.println("File not found: " + filePath);
-            }
         }
     }
 }
