@@ -24,6 +24,26 @@ public class Day5 extends Day {
         }
     }
 
+    @Override
+    protected void part2() {
+        try {
+            Rules rules = new Rules(getFile(filePath1));
+            Update[] updates = Update.getUpdates(getFile(filePath2));
+
+            int count = 0;
+            for (Update update : updates) {
+                if (!update.follows(rules)) {
+                    update.fixAccordingTo(rules);
+                    count += update.getMiddlePageNumber();
+                }
+            }
+
+            System.out.println("Count: " + count);
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: " + e.getMessage());
+        }
+    }
+
     private static class Rules {
         public Map<Integer, Set<Integer>> orders = new HashMap<>();
 
@@ -71,6 +91,24 @@ public class Day5 extends Day {
                 }
             }
             return true;
+        }
+
+        public void fixAccordingTo(Rules rules) {
+            for (int i = elements.length-1; i > 0; i--) {
+                if (rules.orders.containsKey(elements[i])) {
+                    for (int j = i-1; j >= 0; j--) {
+                        try {
+                            if (rules.orders.get(elements[i]).contains(elements[j])) {
+                                int temp = elements[i];
+                                elements[i] = elements[j];
+                                elements[j] = temp;
+                            }
+                        } catch (NullPointerException ignored) {
+
+                        }
+                    }
+                }
+            }
         }
 
         public int getMiddlePageNumber() {
