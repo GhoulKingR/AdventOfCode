@@ -3,16 +3,34 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Day7 extends Day {
+    String filePath = "data/day7/input.txt";
 
     @Override
     protected void part1() {
         try{
-            String filePath = "data/day7/input.txt";
             List<String> lines = getFile(filePath);
             long total = 0;
             for (String line : lines) {
                 TestCase testCase = new TestCase(line);
                 if (testCase.isTrue()) {
+                    total += testCase.getTestNum();
+                }
+            }
+            System.out.println("Total true cases: " + total);
+        } catch (FileNotFoundException e) {
+            System.err.println("File not found: " + e.getMessage());
+            return;
+        }
+    }
+
+    @Override
+    protected void part2() {
+        try{
+            List<String> lines = getFile(filePath);
+            long total = 0;
+            for (String line : lines) {
+                TestCase testCase = new TestCase(line);
+                if (testCase.isTrue3()) {
                     total += testCase.getTestNum();
                 }
             }
@@ -62,19 +80,31 @@ public class Day7 extends Day {
             return false;
         }
 
-//        public boolean isTrue() {
-//            return _isTrue(0, 0);
-//        }
-//
-//        private boolean _isTrue(int pos, int total) {
-//            if (pos == testNums.length) {
-//                return total == testNum;
-//            } else {
-//                if (_isTrue(pos+1, total + testNums[pos]))
-//                    return true;
-//                return _isTrue(pos + 1, total * testNums[pos]);
-//            }
-//        }
+        public boolean isTrue3() {
+            int len = testNums.length - 1;
+            long permutation = (long) Math.pow(3, len);
+            for (long i = 0; i < permutation; i++) {
+                long keepingTrack = i;
+                long totalNum = testNums[0];
+                for (int j = 1; j < len + 1 ; j++) {
+                    int operation = (int) keepingTrack % 3;
+                    keepingTrack /= 3;
+
+                    if (operation == 0) {
+                        totalNum *= testNums[j];
+                    } else if (operation == 1) {
+                        totalNum += testNums[j];
+                    } else {
+                        totalNum = Long.parseLong(String.valueOf(totalNum) + String.valueOf(testNums[j]));
+                    }
+                }
+
+                if (totalNum == testNum) {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         public long getTestNum() {
             return testNum;
