@@ -1,5 +1,5 @@
 # Day 1 - 8
-At first I wanted to write the entire of AoC in Java, but I changed my mind (mainly because coding in Java is somewhat boring). Plus, my setup is built to work better with systems languages because I code a lot of Rust, C, and C++.
+At first I wanted to write the entire of AoC in Java, but I changed my mind (mainly because coding in Java is somewhat boring). Plus, my setup is built to work better with systems languages because I code a lot of Rust, C, and C++. (I use neovim btw :))
 
 ## How to Run
 Follow these steps to run any of the days in this folder:
