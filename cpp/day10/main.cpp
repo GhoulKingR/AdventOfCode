@@ -62,6 +62,30 @@ class Map {
         return true;
     }
 
+    int get_trailheadrating(int x, int y, int initial_level) {
+        if (initial_level == 9) return 1;
+
+        int count = 0;
+
+        if (y > 0 && map[y-1][x] - '0' == initial_level + 1)
+            count += get_trailheadrating(x, y - 1, map[y-1][x] - '0');
+
+        for (int j = x-1; j < x + 2; j++) {
+            if (j < 0 || j >= map[y].size()) continue;
+            int num = map[y][j] - '0';
+            if (num == initial_level + 1)
+                count += get_trailheadrating(j, y, num);
+        }
+
+        if (y < map.size()-1 && map[y+1][x] - '0' == initial_level + 1)
+            count += get_trailheadrating(x, y+1, map[y+1][x] - '0');
+
+        if (initial_level == 0)
+            std::cout << count << std::endl;
+
+        return count;
+    }
+
 public:
     Map(std::vector<std::string> map) {
         this->map = map;
@@ -82,6 +106,21 @@ public:
         }
         return trailheadscore;
     }
+
+    int trailhead_rating() {
+        int trailheadscore = 0;
+        for (int y = 0; y < map.size(); y++) {
+            std::string line = map[y];
+
+            for (int x = 0; x < line.size(); x++) {
+                int level = line[x] - '0';
+                if (level == 0) {
+                    trailheadscore += get_trailheadrating(x, y, level);
+                }
+            }
+        }
+        return trailheadscore;
+    }
 };
 
 int main() {
@@ -93,9 +132,12 @@ int main() {
         map_data.push_back(line);
     }
 
-    Map map(map_data);
+    // part 1
+    // Map map(map_data);
+    // std::cout << "Trailhead scores: " << map.trailhead_score() << std::endl;
 
-    std::cout << "Trailhead scores: " << map.trailhead_score() << std::endl;
+    Map map(map_data);
+    std::cout << "Trailhead rating: " << map.trailhead_rating() << std::endl;
 
     return 0;
 }
