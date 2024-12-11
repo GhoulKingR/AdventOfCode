@@ -14,8 +14,9 @@ Progress so far:
 | 8 | ⭐️⭐️ | |
 | 9 | ⭐️⭐️ | Started in C++ |
 | 10 | ⭐️⭐️ | |
-| 11 | ⭐️ | Java way was nicer than C++. Started in C because it's better than C++. I don't have enough ram to run part 2 🫠 |
+| 11 | ⭐️ | The Java way of coding is nicer than C++. Started in C because it's better than C++. I don't have enough ram to run part 2 🫠 |
 
 ## Notes
-- Day 1 to 8 is written in Java
-- Day 9 is written in C++
+- Day 1 to 8 is written in Java (the `java` folder)
+- Day 9 to 10 is written in C++ (the `cpp` folder)
+- Day 11 is written in C (the `c` folder)
