@@ -14,7 +14,7 @@ Progress so far:
 | 8 | ⭐️⭐️ | |
 | 9 | ⭐️⭐️ | |
 | 10 | ⭐️⭐️ | |
-| 11 | ⭐️ | I don't have enough ram to run part 2 |
+| 11 | ⭐️ | I don't have enough ram to run part 2 🫠 |
 
 ## Notes
 - Day 1 to 8 is written in Java
