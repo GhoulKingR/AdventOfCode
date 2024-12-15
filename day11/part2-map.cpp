@@ -48,7 +48,7 @@ std::unordered_map<long long, long long> blink(std::unordered_map<long long, lon
         long long freq = kv.second;
 
         if (stone == 0) {
-            result[1] = freq;
+            result[1] = getordef(result, 1, 0) + freq;
         } else if (isevendigits(stone)) {
             int half_size = digitcount(stone) / 2;
             long long lower_half = 0;
@@ -89,16 +89,16 @@ void print(std::unordered_map<long long, long long> stones) {
 
 
 int main() {
-    std::ifstream file("test2.txt");
+    std::ifstream file("input.txt");
     std::string line;
     std::getline(file, line);
     std::unordered_map<long long, long long> stones = getstones(line);
     // blink once
-    int numblinks = 25;
+    int numblinks = 75;
     for (int i = 0; i < numblinks; i++) {
         stones = blink(stones);
     }
-    print(stones);
+    // print(stones);
     std::cout << "Num of stones: " << count(stones) << std::endl;
     return 0;
 }
